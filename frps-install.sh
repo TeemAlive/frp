@@ -2,7 +2,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 ###export###
 export PATH
-export FRPS_VER=0.29.1
+export FRPS_VER=0.36.2
 export FRPS_INIT="https://code.aliyun.com/lj47312/frp/raw/master/frps.init"
 export aliyun_download_url="https://code.aliyun.com/lj47312/frp/blob/master"
 export github_download_url="https://github.com/fatedier/frp/releases/download"
@@ -13,7 +13,7 @@ export github_download_url="https://github.com/fatedier/frp/releases/download"
 #   汉化修复者 : lj47312
 #======================================================================
 program_name="frps"
-version="19.11.03"
+version="0.36.2"
 str_program_dir="/usr/local/${program_name}"
 program_init="/etc/init.d/${program_name}"
 program_config_file="frps.ini"
