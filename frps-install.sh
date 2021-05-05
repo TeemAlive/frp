@@ -18,7 +18,7 @@ str_program_dir="/usr/local/${program_name}"
 program_init="/etc/init.d/${program_name}"
 program_config_file="frps.ini"
 ver_file="/tmp/.frp_ver.sh"
-str_install_shell="https://code.aliyun.com/lj47312/frp/raw/master/frps-install.sh"
+str_install_shell="https://raw.githubusercontent.com/lj47312/frp/main/frps-install.sh"
 shell_update(){
     fun_clangcn "clear"
     echo "检查shell脚本的更新..."
