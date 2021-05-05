@@ -13,7 +13,7 @@ export github_download_url="https://github.com/fatedier/frp/releases/download"
 #   汉化修复者 : lj47312
 #======================================================================
 program_name="frps"
-version="0.36.2"
+version="210322"
 str_program_dir="/usr/local/${program_name}"
 program_init="/etc/init.d/${program_name}"
 program_config_file="frps.ini"
