@@ -275,7 +275,7 @@ fun_input_bind_port(){
     fun_check_port "bind" "${serverport}"
 }
 fun_input_dashboard_port(){
-    def_dashboard_port="44445"
+    def_dashboard_port="22222"
     echo ""
     echo -n -e "请输入 ${program_name} ${COLOR_GREEN}dashboard_port${COLOR_END} [1-65535]"
     read -e -p "(默认 : ${def_dashboard_port}):" input_dashboard_port
@@ -283,7 +283,7 @@ fun_input_dashboard_port(){
     fun_check_port "dashboard" "${input_dashboard_port}"
 }
 fun_input_vhost_http_port(){
-    def_vhost_http_port="80"
+    def_vhost_http_port="47301"
     echo ""
     echo -n -e "请输入 ${program_name} ${COLOR_GREEN}vhost_http_port${COLOR_END} [1-65535]"
     read -e -p "(默认 : ${def_vhost_http_port}):" input_vhost_http_port
@@ -291,7 +291,7 @@ fun_input_vhost_http_port(){
     fun_check_port "vhost_http" "${input_vhost_http_port}"
 }
 fun_input_vhost_https_port(){
-    def_vhost_https_port="443"
+    def_vhost_https_port="47302"
     echo ""
     echo -n -e "请输入 ${program_name} ${COLOR_GREEN}vhost_https_port${COLOR_END} [1-65535]"
     read -e -p "(默认 : ${def_vhost_https_port}):" input_vhost_https_port
@@ -300,7 +300,7 @@ fun_input_vhost_https_port(){
 }
 fun_input_log_max_days(){
     def_max_days="30" 
-    def_log_max_days="3"
+    def_log_max_days="1"
     echo ""
     echo -e "请输入 ${program_name} ${COLOR_GREEN}log_max_days${COLOR_END} [1-${def_max_days}]"
     read -e -p "(默认 : ${def_log_max_days} day):" input_log_max_days
@@ -399,12 +399,12 @@ pre_install_clang(){
         echo -e "${program_name} max_pool_count: ${COLOR_YELOW}${set_max_pool_count}${COLOR_END}"
         echo -e ""
         echo -e "请选择 ${COLOR_GREEN}log_level${COLOR_END}"
-        echo    "1: info (默认)"
+        echo    "1: info"
         echo    "2: warn"
-        echo    "3: error"
+        echo    "3: error (默认)"
         echo    "4: debug"    
         echo    "-------------------------"
-        read -e -p "输入您的选择 (1, 2, 3, 4 或退出. 默认 [1]): " str_log_level
+        read -e -p "输入您的选择 (1, 2, 3, 4 或退出. 默认 [3]): " str_log_level
         case "${str_log_level}" in
             1|[Ii][Nn][Ff][Oo])
                 str_log_level="info"
@@ -422,7 +422,7 @@ pre_install_clang(){
                 exit 1
                 ;;
             *)
-                str_log_level="info"
+                str_log_level="error"
                 ;;
         esac
         echo -e "log_level: ${COLOR_YELOW}${str_log_level}${COLOR_END}"
