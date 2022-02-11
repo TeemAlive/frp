@@ -84,7 +84,7 @@ get_char(){
     stty echo
     stty $SAVEDSTTY
 }
-# Check OS
+# 检查OS系统
 checkos(){
     if  grep -Eqi "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
         OS=CentOS
@@ -97,7 +97,7 @@ checkos(){
         exit 1
     fi
 }
-# Get version
+# 获取版本
 getversion(){
     if [[ -s /etc/redhat-release ]];then
         grep -oE  "[0-9.]+" /etc/redhat-release
@@ -105,7 +105,7 @@ getversion(){
         grep -oE  "[0-9.]+" /etc/issue
     fi
 }
-# CentOS version
+# CentOS版本
 centosversion(){
     local code=$1
     local version="`getversion`"
@@ -116,7 +116,7 @@ centosversion(){
         return 1
     fi
 }
-# Check OS bit
+# 检查操作系统32位或64位
 check_os_bit(){
     ARCHS=""
     if [[ `getconf WORD_BIT` = '32' && `getconf LONG_BIT` = '64' ]] ; then
@@ -133,7 +133,7 @@ if centosversion 5; then
     exit 1
 fi
 }
-# Disable selinux
+# 禁用selinux
 disable_selinux(){
     if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
@@ -159,7 +159,7 @@ pre_install_packs(){
         fi
     fi
 }
-# Random password
+# 随机密码
 fun_randstr(){
     strNum=$1
     [ -z "${strNum}" ] && strNum="16"
@@ -204,7 +204,7 @@ fun_getVer(){
     fi
 }
 fun_download_file(){
-    # download
+    # 下载
     if [ ! -s ${str_program_dir}/${program_name} ]; then
         rm -fr ${program_latest_filename} frp_${FRPS_VER}_linux_${ARCHS}
         if ! wget  -q ${program_latest_file_url} -O ${program_latest_filename}; then
@@ -228,7 +228,7 @@ function __readINI() {
  _readIni=`awk -F '=' '/\['$SECTION'\]/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
 echo ${_readIni}
 }
-# Check port
+# 检查端口
 fun_check_port(){
     port_flag=""
     strCheckPort=""
@@ -265,7 +265,7 @@ fun_check_number(){
         fun_input_${num_flag}
     fi
 }
-# input configuration data
+# 输入配置数据
 fun_input_bind_port(){
     def_server_port="44444"
     echo ""
@@ -273,6 +273,14 @@ fun_input_bind_port(){
     read -e -p "(默认服务端口: ${def_server_port}):" serverport
     [ -z "${serverport}" ] && serverport="${def_server_port}"
     fun_check_port "bind" "${serverport}"
+}
+fun_input_bind_udp_port(){
+    def_bind_udp_port="44445"
+    echo ""
+    echo -n -e "请输入 ${program_name} ${COLOR_GREEN}bind_udp_port${COLOR_END} [1-65535]"
+    read -e -p "(默认UDP服务端口 : ${def_bind_udp_port}):" input_bind_udp_port
+    [ -z "${input_bind_udp_port}" ] && input_bind_udp_port="${def_bind_udp_port}"
+    fun_check_port "bind_udp" "${input_bind_udp_port}"
 }
 fun_input_dashboard_port(){
     def_dashboard_port="22222"
@@ -365,6 +373,10 @@ pre_install_clang(){
         fun_input_bind_port
         [ -n "${input_port}" ] && set_bind_port="${input_port}"
         echo -e "${program_name} bind_port: ${COLOR_YELOW}${set_bind_port}${COLOR_END}"
+        echo -e ""
+ 		fun_input_bind_udp_port
+        [ -n "${input_port}" ] && set_bind_udp_port="${input_port}"
+        echo -e "${program_name} bind_udp_port: ${COLOR_YELOW}${set_bind_udp_port}${COLOR_END}"
         echo -e ""
         fun_input_vhost_http_port
         [ -n "${input_port}" ] && set_vhost_http_port="${input_port}"
@@ -501,6 +513,7 @@ pre_install_clang(){
         echo "============== 检查输入 =============="
         echo -e "You Server IP      : ${COLOR_GREEN}${defIP}${COLOR_END}"
         echo -e "Bind port          : ${COLOR_GREEN}${set_bind_port}${COLOR_END}"
+        echo -e "Bind UDP port      : ${COLOR_GREEN}${set_bind_udp_port}${COLOR_END}"        
         echo -e "kcp support        : ${COLOR_GREEN}${set_kcp}${COLOR_END}"
         echo -e "vhost http port    : ${COLOR_GREEN}${set_vhost_http_port}${COLOR_END}"
         echo -e "vhost https port   : ${COLOR_GREEN}${set_vhost_https_port}${COLOR_END}"
@@ -538,6 +551,8 @@ cat > ${str_program_dir}/${program_config_file}<<-EOF
 # 方括号内，如 "[::1]:80", "[ipv6-host]:http" or "[ipv6-host%zone]:80"
 bind_addr = 0.0.0.0
 bind_port = ${set_bind_port}
+# UDP穿透服务器的服务端口定义
+bind_udp_port = ${set_bind_udp_port}
 # KCP用来给UDP端口加速的服务端口，可以和上面的UDP服务端口bind_port相同
 # 如果没有设置KCP加速，请注释此行
 #kcp_bind_port = ${set_bind_port}
@@ -573,6 +588,8 @@ cat > ${str_program_dir}/${program_config_file}<<-EOF
 # 方括号内，如 "[::1]:80", "[ipv6-host]:http" or "[ipv6-host%zone]:80"
 bind_addr = 0.0.0.0
 bind_port = ${set_bind_port}
+# UDP穿透服务器的服务端口定义
+bind_udp_port = ${set_bind_udp_port}
 # KCP用来给UDP端口加速的服务端口，可以和上面的UDP服务端口bind_port相同
 # 如果没有设置KCP加速，请注释此行
 kcp_bind_port = ${set_bind_port}
@@ -636,6 +653,7 @@ fi
     echo "================================================"
     echo -e "You Server IP      : ${COLOR_GREEN}${defIP}${COLOR_END}"
     echo -e "Bind port          : ${COLOR_GREEN}${set_bind_port}${COLOR_END}"
+    echo -e "Bind UDP port      : ${COLOR_GREEN}${set_bind_udp_port}${COLOR_END}"
     echo -e "KCP support        : ${COLOR_GREEN}${set_kcp}${COLOR_END}"
     echo -e "vhost http port    : ${COLOR_GREEN}${set_vhost_http_port}${COLOR_END}"
     echo -e "vhost https port   : ${COLOR_GREEN}${set_vhost_https_port}${COLOR_END}"
