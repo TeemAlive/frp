@@ -12,7 +12,7 @@
 </div>
 <h4><a id="user-content-aliyun" aria-hidden="true" href="https://github.com/lj47312/frp#aliyun"></a>Aliyun</h4>
 <div>
-  <pre>wget --no-check-certificate https://code.aliyun.com/lj47312/frp/raw/master/frps-install.sh -O ./frps-install.sh &amp;&amp; chmod 700 ./frps-install.sh &amp;&amp; ./frps-install.sh install</pre>
+  <pre>wget --no-check-certificate https://gitee.com/lj47312/frp/raw/main/frps-install.sh -O ./frps-install.sh &amp;&amp; chmod 700 ./frps-install.sh &amp;&amp; ./frps-install.sh install</pre>
 </div>
 <h3><a id="user-content-uninstall卸载" aria-hidden="true" href="https://github.com/lj47312/frp#uninstall卸载"></a>Uninstall（卸载）</h3>
 <div>
