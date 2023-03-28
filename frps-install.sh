@@ -4,7 +4,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 export FRPS_VER=0.48.0
 export FRPS_INIT="https://raw.githubusercontent.com/lj47312/frp/main/frps.init"
-export aliyun_download_url="https://code.aliyun.com/lj47312/frp/blob/master"
+export aliyun_download_url="https://gitee.com/lj47312/frp/releases/download"
 export github_download_url="https://github.com/fatedier/frp/releases/download"
 #======================================================================
 #   支持系统:  CentOS Debian 或 Ubuntu (32bit/64bit)
