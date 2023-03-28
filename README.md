@@ -10,7 +10,7 @@
 <div>
   <pre>wget --no-check-certificate https://github.itzmx.com/lj47312/frp/master/frps-install.sh -O ./frps-install.sh &amp;&amp; chmod 700 ./frps-install.sh &amp;&amp; ./frps-install.sh install</pre>
 </div>
-<h4><a id="user-content-aliyun" aria-hidden="true" href="https://github.com/lj47312/frp#aliyun"></a>Aliyun</h4>
+<h4><a id="user-content-aliyun" aria-hidden="true" href="https://github.com/lj47312/frp#aliyun"></a>Gitee</h4>
 <div>
   <pre>wget --no-check-certificate https://gitee.com/lj47312/frp/raw/main/frps-install.sh -O ./frps-install.sh &amp;&amp; chmod 700 ./frps-install.sh &amp;&amp; ./frps-install.sh install</pre>
 </div>
